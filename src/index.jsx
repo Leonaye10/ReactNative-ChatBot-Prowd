@@ -24,16 +24,21 @@ const ChatBot = () => {
     const getReponseChatBot = async (message) => {
         const response = await fetch('https://dev.beprowd.fr/webchat-connector',{
             method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
                 "auth":"53616c7465645f5f30c3fbcab5721e791de5c170251741079bc752ffed341158bbbfa3a8d3e413f32519ab3bdd2d9e73e3d8d9310094281d2aa23537720c3d8dbfcb7d59be889f82e8ccae57e8e7b0af",
                 "conversation_id":"114548-4542457-142424-452452-webchat",
-                "text":"Salut"            
+                "text":message            
             })
         })
         const resultat = await response.json();
-        console.log(resultat);
-        setIndex(index+1)
-        chats = [...chats, {key: index, message: resultat.message, incommingMsg: true}]
+        //console.log(message);
+        console.log(resultat[0].content);
+        setIndex(index + 1)
+        chats = [...chats, {key: index, message: resultat[0].content, incommingMsg: true}]
         setChatList([...chats].reverse())
     }
 
